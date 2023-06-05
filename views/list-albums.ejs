@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>List Albums</title>
+</head>
+<body>
+  <h1>List Albums</h1>
+  <% if (albums.length === 0) { %>
+    <p>No albums found.</p>
+  <% } else { %>
+    <ul>
+      <% albums.forEach(function(album) { %>
+        <li><%= album.title %> - <%= album.artist %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+</body>
+</html>

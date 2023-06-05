@@ -1,5 +1,5 @@
 const Album = require('../models/Albums');
-
+const express = require('express');
 // Get all albums
 exports.getAllAlbums = async (req, res) => {
   try {
@@ -21,7 +21,7 @@ exports.getAlbumById = async (req, res) => {
       return res.status(404).json({ error: 'Album not found' });
     }
 
-    res.json(album);
+    res.render("albums", { albums });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve the album' });
   }

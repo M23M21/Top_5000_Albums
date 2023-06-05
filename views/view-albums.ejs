@@ -1,0 +1,11 @@
+<h2>Albums</h2>
+<div id="albums">
+  <% albums.forEach(album => { %>
+    <div>
+      <h3><%= album.release_name %></h3>
+      <p>Artist: <%= album.artist_name %></p>
+      <p>Release Date: <%= album.release_date %></p>
+      <p>Descriptors: <%= album.descriptors %></p>
+    </div>
+  <% }) %>
+</div>

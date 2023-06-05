@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Top 5000 Albums</title>
+  </head>
+  <body>
+    <h1>Welcome to the Top 5000 Albums</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/albums">Albums</a>
+      <a href="/reviews">Reviews</a>
+      <a href="/login">Login</a>
+      <a href="/signup">Sign Up</a>
+    </nav>
+    <h2>Albums</h2>
+    <ul>
+      <% albums.forEach(function(album) { %>
+        <li><%= album.title %> - <%= album.artist %></li>
+      <% }); %>
+    </ul>
+  </body>
+</html>

@@ -7,7 +7,6 @@ require('dotenv').config();
 // Import necessary modules
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-require('dotenv').config();
 
 // Import your models
 const Album = require('./models/Albums');
@@ -33,13 +32,14 @@ mongoose
     process.exit(1);
   });
 
+// Set up EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-
-app.use(express.static('public'));
 
 // Use the routers for routes starting with /albums, /users, /reviews
 app.use('/albums', albumsRouter);

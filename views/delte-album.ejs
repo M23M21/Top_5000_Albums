@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Delete Album</title>
+</head>
+<body>
+  <h1>Delete Album</h1>
+  <form method="POST" action="/albums/<%= album._id %>?_method=DELETE">
+    <p>Are you sure you want to delete this album?</p>
+    <p>Title: <%= album.title %></p>
+    <p>Artist: <%= album.artist %></p>
+    <button type="submit">Delete Album</button>
+  </form>
+</body>
+</html>
