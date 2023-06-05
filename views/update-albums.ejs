@@ -7,11 +7,17 @@
 <body>
   <h1>Update Album</h1>
   <form method="POST" action="/albums/<%= album._id %>?_method=PUT">
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" value="<%= album.title %>" required>
+    <label for="release_name">Title:</label>
+    <input type="text" id="release_name" name="release_name" value="<%= album.release_name %>" required>
     <br>
-    <label for="artist">Artist:</label>
-    <input type="text" id="artist" name="artist" value="<%= album.artist %>" required>
+    <label for="artist_name">Artist:</label>
+    <input type="text" id="artist_name" name="artist_name" value="<%= album.artist_name %>" required>
+    <br>
+    <label for="release_date">Release Date:</label>
+    <input type="date" id="release_date" name="release_date" value="<%= album.release_date %>" required>
+    <br>
+    <label for="descriptors">Descriptors:</label>
+    <input type="text" id="descriptors" name="descriptors" value="<%= album.descriptors %>" required>
     <br>
     <button type="submit">Update Album</button>
   </form>

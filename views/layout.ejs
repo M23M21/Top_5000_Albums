@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My App</title>
+  <!-- Include your CSS and other head elements here -->
+  <style>
+    /* CSS for the background image */
+    body {
+      background-image: url("/path/to/background-image.jpg");
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header section with logo and navigation -->
+  <header>
+    <img src="/path/to/logo.png" alt="Logo">
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/albums">Albums</a></li>
+        <li><a href="/reviews">Reviews</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign up</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <% if (content === 'menu') { %>
+    <!-- Content for the menu page -->
+    <h1>Welcome to the Menu</h1>
+    <!-- ... -->
+  <% } else if (content === 'albums') { %>
+    <!-- Content for the albums page -->
+    <h1>Welcome to the Albums</h1>
+    <% albums.forEach(album => { %>
+      <h2><%= album.title %></h2>
+      <!-- ... -->
+    <% }) %>
+  <% } %>
+
+  <!-- Include your footer and other common HTML code here -->
+</body>
+</html>

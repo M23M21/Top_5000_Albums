@@ -11,7 +11,12 @@
   <% } else { %>
     <ul>
       <% albums.forEach(function(album) { %>
-        <li><%= album.title %> - <%= album.artist %></li>
+        <li>
+          <%= album.release_name %> - 
+          <%= album.artist_name %> - 
+          Release date: <%= album.release_date %> -
+          Descriptors: <%= album.descriptors.join(', ') %>
+        </li>
       <% }); %>
     </ul>
   <% } %>

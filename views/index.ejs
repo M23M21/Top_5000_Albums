@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Top 5000 Albums</title>
-  </head>
-  <body>
-    <h1>Welcome to the Top 5000 Albums</h1>
+<head>
+  <title>Top 5000 Albums</title>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+  <header id="header">
     <nav>
-      <a href="/">Home</a>
-      <a href="/albums">Albums</a>
-      <a href="/reviews">Reviews</a>
-      <a href="/login">Login</a>
-      <a href="/signup">Sign Up</a>
+      <div class="logo">
+        <<img src="/images/logo.png" alt="Logo" />
+      </div>
+      <ul class="menu-items">
+        <li><a href="/">Home</a></li>
+        <li><a href="/albums">Albums</a></li>
+        <li><a href="/reviews">Reviews</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+      </ul>
     </nav>
-    <h2>Albums</h2>
-    <ul>
-      <% albums.forEach(function(album) { %>
-        <li><%= album.title %> - <%= album.artist %></li>
-      <% }); %>
-    </ul>
-  </body>
+  </header>
+  
+  <div id="main-page">
+    <h1 class="title">Welcome to Top 5000 Albums</h1>
+    
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2023 Top 5000 Albums. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+</body>
 </html>

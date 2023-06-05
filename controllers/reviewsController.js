@@ -1,20 +1,21 @@
 const Review = require('../models/Reviews');
-const express = require('express');
+
 // Get all reviews
 exports.getAllReviews = async (req, res) => {
   try {
     const reviews = await Review.find();
-    res.json(reviews);
+    console.log(reviews); // log the retrieved reviews
+    res.render('AllReviews', { reviews });
   } catch (error) {
+    console.error('Error:', error);
     res.status(500).json({ error: 'Failed to retrieve reviews' });
   }
 };
 
-// Get a specific review by ID
 exports.getReviewById = async (req, res) => {
   const { id } = req.params;
   try {
-    const review = await Review.findById(id);
+    const review = await Review.findById(id).populate('user');
     if (!review) {
       return res.status(404).json({ error: 'Review not found' });
     }
@@ -23,6 +24,7 @@ exports.getReviewById = async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve the review' });
   }
 };
+
 
 // Create a new review
 exports.createReview = async (req, res) => {

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All Reviews</title>
+  <!-- Add your CSS stylesheets or inline styles here -->
+</head>
+<body>
+  <h1>All Reviews</h1>
+  <% if (reviews.length === 0) { %>
+    <p>No reviews found.</p>
+  <% } else { %>
+    <ul>
+      <% reviews.forEach((review) => { %>
+        <li>
+          <h3>Review ID: <%= review._id %></h3>
+          <p>User ID: <%= review.user %></p>
+          <p>Review: <%= review.review %></p>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</body>
+</html>

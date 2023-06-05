@@ -5,9 +5,12 @@ const Album = require('../models/Albums');
 // Get all albums
 router.get('/', async (req, res) => {
   try {
+    console.log('Fetching albums...');
     const albums = await Album.find();
-    res.json(albums);
+    console.log('Albums:', albums); // Log the albums data
+    res.render('albums', { albums: albums });
   } catch (error) {
+    console.error('Error retrieving albums:', error);
     res.status(500).json({ error: 'Failed to retrieve albums' });
   }
 });
@@ -26,7 +29,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create a new album
+// Create a new albumå
 router.post('/', async (req, res) => {
   const albumData = req.body;
   try {

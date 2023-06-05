@@ -21,7 +21,7 @@ exports.getAlbumById = async (req, res) => {
       return res.status(404).json({ error: 'Album not found' });
     }
 
-    res.render("albums", { albums });
+    res.render("albums", { album });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve the album' });
   }

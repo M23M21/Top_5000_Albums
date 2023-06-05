@@ -7,11 +7,17 @@
 <body>
   <h1>Create Album</h1>
   <form method="POST" action="/albums">
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
+    <label for="release_name">Album Title:</label>
+    <input type="text" id="release_name" name="release_name" required>
     <br>
-    <label for="artist">Artist:</label>
-    <input type="text" id="artist" name="artist" required>
+    <label for="artist_name">Artist:</label>
+    <input type="text" id="artist_name" name="artist_name" required>
+    <br>
+    <label for="release_date">Release Date:</label>
+    <input type="date" id="release_date" name="release_date" required>
+    <br>
+    <label for="descriptors">Descriptors:</label>
+    <input type="text" id="descriptors" name="descriptors" placeholder="Separate descriptors with a comma">
     <br>
     <button type="submit">Create Album</button>
   </form>
