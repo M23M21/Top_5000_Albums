@@ -1,22 +1,21 @@
 <h1>Edit Album</h1>
 
-<form action="/albums/<%= album._id %>?_method=PUT" method="POST">
+<form action="/albums/<%= album.id %>?_method=PUT" method="POST">
+  <label for="release_name">Album Name:</label>
+  <input type="text" id="release_name" name="release_name" value="<%= album.release_name %>" required>
 
-  <div>
-    <label for="release_name">Album Name:</label>
-    <input type="text" id="release_name" name="release_name" value="<%= album.release_name %>" required>
-  </div>
-  <div>
-    <label for="artist_name">Artist Name:</label>
-    <input type="text" id="artist_name" name="artist_name" value="<%= album.artist_name %>" required>
-  </div>
-  <div>
-    <label for="release_date">Release Date:</label>
-    <input type="date" id="release_date" name="release_date" value="<%= album.release_date %>" required>
-  </div>
-  <div>
-    <label for="descriptors">Description:</label>
-    <textarea id="descriptors" name="descriptors" rows="4" required><%= album.descriptors %></textarea>
-  </div>
-  <button type="submit">Save Changes</button>
+  <label for="artist_name">Artist Name:</label>
+  <input type="text" id="artist_name" name="artist_name" value="<%= album.artist_name %>" required>
+
+  <label for="release_date">Release Date:</label>
+  <input type="date" id="release_date" name="release_date" value="<%= album.release_date %>" required>
+
+  <label for="descriptors">Description:</label>
+  <input type="text" id="descriptors" name="descriptors" value="<%= album.descriptors %>" required>
+
+  <button type="submit">Update</button>
 </form>
+
+<div class="album-actions">
+  <button onclick="window.location.href='/albums/read/<%= album.id %>'" class="back-button">Back</button>
+</div>

@@ -6,13 +6,25 @@
 </head>
 <body>
   <h1>Delete Album</h1>
-  <form action="/albums/<%= album._id %>?_method=DELETE" method="POST">
-    <input type="submit" value="Delete">
+  <form id="deleteAlbumForm" action="/albums/<%= album._id %>" method="POST">
     <p>Are you sure you want to delete this album?</p>
     <p>Title: <%= album.release_name %></p>
     <p>Artist: <%= album.artist_name %></p>
     <p>Release Date: <%= album.release_date %></p>
-    <button onclick="deleteAlbum('<%= album.id %>')">Delete</button>
+    <button type="submit">Delete Album</button>
   </form>
+
+  <script>
+    const deleteAlbumForm = document.getElementById('deleteAlbumForm');
+    deleteAlbumForm.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent form submission
+
+      const confirmation = confirm('Are you sure you want to delete this album?');
+      if (confirmation) {
+        // Submit the form if the user confirms
+        deleteAlbumForm.submit();
+      }
+    });
+  </script>
 </body>
 </html>

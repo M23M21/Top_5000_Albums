@@ -1,16 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Top 5000 Albums</title>
-  <link rel="stylesheet" type="text/css" href="/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url(/images/records.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+    }
+    
+    .logo {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    
+    .logo img {
+      width: 100px;
+      height: auto;
+    }
+    
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    nav ul li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    #main-page {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+    }
+    
+    .album-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .album-item {
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      padding: 20px;
+      width: 300px;
+    }
+    
+    .album-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    
+    .album-artist {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #999;
+    }
+    
+    .album-release-date {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #999;
+    }
+  </style>
 </head>
 <body>
   <header id="header">
     <nav>
       <div class="logo">
-        <<img src="/images/logo.png" alt="Logo" />
+        <img src="/images/logo.png" alt="Logo" />
       </div>
-      <ul class="menu-items">
+      <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/albums">Albums</a></li>
         <li><a href="/reviews">Reviews</a></li>
@@ -22,19 +101,7 @@
   </header>
   
   <div id="main-page">
-    <h1 class="title">Welcome to Top 5000 Albums</h1>
-    
+    <h1>Welcome to Top 5000 Albums</h1>
   </div>
-
-  <footer>
-    <div class="footer-content">
-      <p>&copy; 2023 Top 5000 Albums. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
-      </div>
-    </div>
-  </footer>
 </body>
 </html>

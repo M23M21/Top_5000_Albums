@@ -5,8 +5,8 @@ const User = require('../models/Users');
 const Review = require('../models/Reviews');
 // GET route for fetching albums with pagination
 router.get('/', async (req, res) => {
-  const page = parseInt(req.query.page) || 1; // get the page number from the query string
-  const limit = 8; // limit of 10 albums per page
+  const page = parseInt(req.query.page) || 1; 
+  const limit = 20; 
   const skip = (page - 1) * limit; // 
   
   try {
@@ -117,7 +117,8 @@ router.get('/delete/:id', async (req, res) => {
   }
 });
 // DELETE route for deleting an album
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
+  
   try {
     const album = await Album.findByIdAndDelete(req.params.id);
     if (!album) {

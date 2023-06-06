@@ -1,20 +1,26 @@
 const express = require('express');
-const router = express.Router();
-const reviewsController = require('../controllers/reviewsController');
+const reviewsRouter = express.Router();
+const { Review } = require('../models/Reviews');
+// Get all reviews
+reviewsRouter.get('/', async (req, res) => {
+    try {
+        const reviews = await Review.find({});
+        res.render('reviews', { reviews }); //
+    } catch (error) {
+        console.error('Error details:', error.message);
+        res.status(500).send('Error occurred while fetching reviews');
+    }
+});
 
-// GET /reviews
-router.get('/', reviewsController.getAllReviews);
+// Delete a review
+reviewsRouter.delete('/:id', async (req, res) => {
+    try {
+        await Review.findByIdAndRemove(req.params.id);
+        res.redirect('/reviews');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error occurred while deleting review');
+    }
+});
 
-// GET /reviews/:id
-router.get('/:id', reviewsController.getReviewById);
-
-// POST /reviews
-router.post('/', reviewsController.createReview);
-
-// PUT /reviews/:id
-router.put('/:id', reviewsController.updateReview);
-
-// DELETE /reviews
-router.delete('/:id', reviewsController.deleteReview);
-
-module.exports = router;
+module.exports = reviewsRouter;

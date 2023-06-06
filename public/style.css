@@ -1,3 +1,5 @@
+/* public/style.css */
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -71,15 +73,13 @@ h1 {
 
 .pagination {
   display: flex;
-  justify-content: center;
-  text-align: center; /* New line added */
+  justify-content: right;
   margin-top: 20px;
 }
 
 .pagination-button {
   display: inline-block;
-  padding: 12px 20px; /* Increased padding */
-  font-size: 1.2em; /* Increased font size */
+  padding: 8px 16px;
   margin: 0 4px;
   border-radius: 4px;
   background-color: #eaeaea;

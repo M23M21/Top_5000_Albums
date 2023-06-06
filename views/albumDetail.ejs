@@ -1,41 +1,13 @@
-<h1><%= album.release_name %></h1>
-<p><%= album.artist_name %></p>
-<p><%= album.release_date %></p>
-<p><%= album.descriptors %></p>
 
-<!-- CRUD operation buttons -->
-<div class="crud-buttons">
-  <!-- Edit -->
-  <button onclick="window.location.href='/albums/edit/<%= album._id %>'">Edit</button>
-  <!-- Delete -->
-  <button onclick="confirmDelete('<%= album._id %>')">Delete</button>
+<h1>Album Detail</h1>
+
+<div class="album-details">
+  <p class="album-info"><strong>Album Name:</strong> <%= album.release_name %></p>
+  <p class="album-info"><strong>Artist Name:</strong> <%= album.artist_name %></p>
+  <p class="album-info"><strong>Release Date:</strong> <%= album.release_date %></p>
+  <p class="album-info"><strong>Description:</strong> <%= album.descriptors %></p>
 </div>
 
-<!-- Script for delete operation -->
-<script>
-  function confirmDelete(id) {
-    if (confirm('Are you sure you want to delete this album?')) {
-      deleteAlbum(id);
-    }
-  }
-
-  function deleteAlbum(id) {
-    fetch('/albums/' + id, {
-      method: 'DELETE',
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          // Redirect to the album list page after deletion
-          window.location.href = '/albums';
-        } else {
-          // Display the error
-          alert(data.error);
-        }
-      })
-      .catch(error => {
-        console.error('Error deleting album:', error);
-        alert('Failed to delete the album');
-      });
-  }
-</script>
+<div class="album-actions">
+  <button onclick="window.location.href='/albums'" class="back-button">Back</button>
+</div>
