@@ -9,6 +9,7 @@ exports.getAllAlbums = async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve albums' });
   }
 };
+app.get('/albums', albumsController.getAllAlbums);
 
 // Get an album by ID
 exports.getAlbumById = async (req, res) => {
@@ -26,11 +27,11 @@ exports.getAlbumById = async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve the album' });
   }
 };
-
+app.get('/albums/:id', albumsController.getAlbumById);
 // Create a new album
 exports.createAlbum = async (req, res) => {
   const { name, artist, releaseDate } = req.body;
-
+  app.post('/albums', albumsController.createAlbum);
   try {
     const newAlbum = new Album({
       name,
@@ -66,6 +67,7 @@ exports.updateAlbumById = async (req, res) => {
     res.status(500).json({ error: 'Failed to update the album' });
   }
 };
+app.put('/albums/:id', albumsController.updateAlbumById);
 
 // Delete an album by ID
 exports.deleteAlbumById = async (req, res) => {
@@ -77,6 +79,7 @@ exports.deleteAlbumById = async (req, res) => {
     if (!deletedAlbum) {
       return res.status(404).json({ error: 'Album not found' });
     }
+    app.delete('/albums/:id', albumsController.deleteAlbumById);
 
     res.json({ success: 'Album deleted successfully' });
   } catch (error) {

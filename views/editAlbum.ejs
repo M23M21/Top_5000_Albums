@@ -1,0 +1,21 @@
+<h1>Edit Album</h1>
+
+<form action="/albums/edit/<%= album._id %>" method="post">
+  <div>
+    <label for="release_name">Album Name:</label>
+    <input type="text" id="release_name" name="release_name" value="<%= album.release_name %>" required>
+  </div>
+  <div>
+    <label for="artist_name">Artist Name:</label>
+    <input type="text" id="artist_name" name="artist_name" value="<%= album.artist_name %>" required>
+  </div>
+  <div>
+    <label for="release_date">Release Date:</label>
+    <input type="date" id="release_date" name="release_date" value="<%= album.release_date %>" required>
+  </div>
+  <div>
+    <label for="descriptors">Description:</label>
+    <textarea id="descriptors" name="descriptors" rows="4" required><%= album.descriptors %></textarea>
+  </div>
+  <button type="submit">Save Changes</button>
+</form>

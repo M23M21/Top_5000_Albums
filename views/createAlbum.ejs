@@ -1,0 +1,11 @@
+<h1>Add new album</h1>
+
+<form action="/albums" method="post">
+  <input type="text" name="release_name" placeholder="Album name" required>
+  <input type="text" name="artist_name" placeholder="Artist name" required>
+  <input type="date" name="release_date" required>
+  <input type="text" name="descriptors" placeholder="Album description" required>
+  <button type="submit">Create</button>
+</form>
+
+<button onclick="window.location.href='/albums'">Back to album list</button>

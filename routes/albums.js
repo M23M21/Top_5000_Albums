@@ -1,73 +1,123 @@
 const express = require('express');
 const router = express.Router();
 const Album = require('../models/Albums');
-
-// Get all albums
+const User = require('../models/Users');
+const Review = require('../models/Reviews');
+// GET route for fetching albums with pagination
 router.get('/', async (req, res) => {
+  const page = parseInt(req.query.page) || 1; // get the page number from the query string
+  const limit = 10; // limit of 10 albums per page
+  const skip = (page - 1) * limit; // calculate the number of albums to skip
+  
   try {
-    console.log('Fetching albums...');
-    const albums = await Album.find();
-    console.log('Albums:', albums); // Log the albums data
-    res.render('albums', { albums: albums });
+    const totalAlbums = await Album.countDocuments(); // get total number of albums
+    const totalPages = Math.ceil(totalAlbums / limit); // calculate total pages
+    const albums = await Album.find().limit(limit).skip(skip);
+    res.render('albums', { albums: albums, currentPage: page, totalPages: totalPages }); // pass currentPage and totalPages to the view
   } catch (error) {
-    console.error('Error retrieving albums:', error);
     res.status(500).json({ error: 'Failed to retrieve albums' });
   }
 });
 
-// Get a specific album by ID
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
+// GET route for reading a single album
+router.get('/read/:id', async (req, res) => {
   try {
-    const album = await Album.findById(id);
+    const album = await Album.findById(req.params.id);
     if (!album) {
       return res.status(404).json({ error: 'Album not found' });
     }
-    res.json(album);
+    res.render('albumDetails', { album: album });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve the album' });
+    res.status(500).json({ error: 'Failed to retrieve album' });
   }
 });
-
-// Create a new albumå
-router.post('/', async (req, res) => {
-  const albumData = req.body;
+// GET route for the edit page
+router.get('/edit/:id', async (req, res) => {
   try {
-    const album = new Album(albumData);
-    const savedAlbum = await album.save();
-    res.status(201).json(savedAlbum);
+    const album = await Album.findById(req.params.id);
+    if (!album) {
+      return res.status(404).json({ error: 'Album not found' });
+    }
+    res.render('editAlbum', { album: album });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to save the album' });
+    res.status(500).json({ error: 'Failed to retrieve album' });
   }
 });
 
-// Update an album
+// PUT route for updating an album
 router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const albumData = req.body;
   try {
-    const album = await Album.findByIdAndUpdate(id, albumData, { new: true });
+    const album = await Album.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!album) {
+      return res.status(404).json({ error: 'Album not found' });
+    }
+    res.redirect('/albums/read/' + req.params.id); // redirect to the updated album page
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update album' });
+  }
+});
+
+
+// Root route
+router.get('/', async (req, res) => {
+  try {
+    const albums = await Album.find();
+    res.render('index', { albums: albums });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve albums' });
+  }
+});
+
+// POST route for creating a new album
+router.post('/', async (req, res) => {
+  const album = new Album(req.body);
+  try {
+    await album.save();
+    res.status(201).json(album);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create album' });
+  }
+});
+
+// GET route for reading a single album
+router.get('/:id', async (req, res) => {
+  try {
+    const album = await Album.findById(req.params.id);
     if (!album) {
       return res.status(404).json({ error: 'Album not found' });
     }
     res.json(album);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update the album' });
+    res.status(500).json({ error: 'Failed to retrieve album' });
   }
 });
 
-// Delete an album
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
+// PUT route for updating an album
+router.put('/:id', async (req, res) => {
   try {
-    const album = await Album.findByIdAndDelete(id);
+    const album = await Album.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!album) {
       return res.status(404).json({ error: 'Album not found' });
     }
-    res.json({ success: 'Album deleted successfully' });
+    res.json(album);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete the album' });
+    res.status(500).json({ error: 'Failed to update album' });
   }
 });
+
+// DELETE route for deleting an album
+router.delete('/:id', async (req, res) => {
+  try {
+    const album = await Album.findByIdAndDelete(req.params.id);
+    if (!album) {
+      return res.status(404).json({ error: 'Album not found' });
+    }
+    res.redirect('/albums'); // redirect to the album list page after deletion
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete album' });
+  }
+});
+
+
 
 module.exports = router;

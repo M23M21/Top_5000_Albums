@@ -1,102 +1,124 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  #header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo {
-    margin-right: 10px;
-  }
-  
-  .logo img {
-    width: 100px;
-    height: auto;
-  }
-  
-  .menu-items {
-    list-style: none;
-    display: flex;
-    margin-left: auto;
-  }
-  
-  .menu-items li {
-    margin-right: 10px;
-  }
-  
-  #main-page {
-    background-color: #fff;
-    padding: 20px;
-  }
-  
-  .title {
-    text-align: center;
-  }
-  
-  .album-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .album-item {
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    padding: 20px;
-    width: 300px;
-  }
-  
-  .album-title {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .album-artist {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #999;
-  }
-  
-  .album-release-date {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #999;
-  }
-  
-  footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .footer-links a {
-    color: #fff;
-    margin: 0 10px;
-    text-decoration: none;
-  }
-  
-  .footer-links a:hover {
-    color: #ddd;
-  }
-  
-  #main-page {
-    background-image: url("/public/images/records.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 40px;
-    color: #333;
-    text-align: center;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.album-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.album-item {
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.album-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.album-artist {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #777;
+}
+
+.album-release-date {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #777;
+}
+
+.album-descriptors {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #999;
+}
+
+.crud-buttons {
+  margin-top: 20px;
+}
+
+.album-action {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-right: 8px;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.album-action:hover {
+  background-color: #555;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 0 4px;
+  border-radius: 4px;
+  background-color: #eaeaea;
+  color: #333333;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+form input {
+  width: 300px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+form button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #555;
+}

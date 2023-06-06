@@ -1,0 +1,30 @@
+<h1><%= album.release_name %></h1>
+<p><%= album.artist_name %></p>
+<p><%= album.release_date %></p>
+<p><%= album.descriptors %></p>
+
+<!-- CRUD operation buttons -->
+<div class="crud-buttons">
+  <!-- Edit -->
+  <button onclick="window.location.href='/albums/edit/<%= album._id %>'">Edit</button>
+  <!-- Delete -->
+  <button onclick="deleteAlbum('<%= album._id %>')">Delete</button>
+</div>
+
+<!-- Script for delete operation -->
+<script>
+  function deleteAlbum(id) {
+    fetch('/albums/delete/' + id, {
+      method: 'DELETE',
+    }).then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Redirect to the album list page after deletion
+          window.location.href = '/albums';
+        } else {
+          // Display the error
+          alert(data.error);
+        }
+      });
+  }
+</script>

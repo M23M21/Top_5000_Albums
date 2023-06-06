@@ -1,11 +1,53 @@
 <h1>Albums</h1>
+
 <div class="album-list">
   <% albums.forEach(album => { %>
     <div class="album-item">
-      <div class="album-title"><%= album.release_name %></div>
-      <div class="album-artist"><%= album.artist_name %></div>
-      <div class="album-release-date"><%= album.release_date %></div>
-      <div class="album-descriptors"><%= album.descriptors %></div>
+      <div class="album-details">
+        <p class="album-info"><strong>Album Name:</strong> <%= album.release_name %></p>
+        <p class="album-info"><strong>Artist Name:</strong> <%= album.artist_name %></p>
+        <p class="album-info"><strong>Release Date:</strong> <%= album.release_date %></p>
+        <p class="album-info"><strong>Description:</strong> <%= album.descriptors %></p>
+      </div>
+      <div class="album-actions">
+        <button onclick="window.location.href='/albums/read/<%= album.id %>'">Read</button>
+        <button onclick="window.location.href='/albums/edit/<%= album.id %>'">Edit</button>
+        <button onclick="deleteAlbum('<%= album.id %>')">Delete</button>
+      </div>
     </div>
   <% }); %>
 </div>
+
+<div class="pagination">
+  <% if (currentPage > 1) { %>
+    <a href="/albums?page=<%= currentPage - 1 %>">Back</a>
+  <% } %>
+  <% if (currentPage < totalPages) { %>
+    <a href="/albums?page=<%= currentPage + 1 %>">Next</a>
+  <% } %>
+</div>
+
+
+<h2>Add new album</h2>
+<form action="/albums/create" method="post">
+  <input type="text" name="release_name" placeholder="Album name" required>
+  <input type="text" name="artist_name" placeholder="Artist name" required>
+  <input type="date" name="release_date" required>
+  <input type="text" name="descriptors" placeholder="Album description" required>
+  <button type="submit">Create</button>
+</form>
+
+<script>
+  function deleteAlbum(id) {
+    fetch('/albums/delete/' + id, {
+      method: 'DELETE',
+    }).then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          window.location.reload();
+        } else {
+          alert(data.error);
+        }
+      });
+  }
+</script>
