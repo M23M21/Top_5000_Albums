@@ -6,12 +6,12 @@ const Review = require('../models/Reviews');
 // GET route for fetching albums with pagination
 router.get('/', async (req, res) => {
   const page = parseInt(req.query.page) || 1; // get the page number from the query string
-  const limit = 10; // limit of 10 albums per page
-  const skip = (page - 1) * limit; // calculate the number of albums to skip
+  const limit = 8; // limit of 10 albums per page
+  const skip = (page - 1) * limit; // 
   
   try {
-    const totalAlbums = await Album.countDocuments(); // get total number of albums
-    const totalPages = Math.ceil(totalAlbums / limit); // calculate total pages
+    const totalAlbums = await Album.countDocuments(); 
+    const totalPages = Math.ceil(totalAlbums / limit); 
     const albums = await Album.find().limit(limit).skip(skip);
     res.render('albums', { albums: albums, currentPage: page, totalPages: totalPages }); // pass currentPage and totalPages to the view
   } catch (error) {
@@ -104,9 +104,20 @@ router.put('/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to update album' });
   }
 });
-
+// GET route for the delete confirmation page
+router.get('/delete/:id', async (req, res) => {
+  try {
+    const album = await Album.findById(req.params.id);
+    if (!album) {
+      return res.status(404).json({ error: 'Album not found' });
+    }
+    res.render('deleteAlbum', { album: album });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve album' });
+  }
+});
 // DELETE route for deleting an album
-router.delete(['/:id', '/read/:id'], async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   try {
     const album = await Album.findByIdAndDelete(req.params.id);
     if (!album) {
@@ -115,6 +126,7 @@ router.delete(['/:id', '/read/:id'], async (req, res) => {
     // Redirect to the album list after deletion
     res.redirect('/albums');
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Failed to delete album' });
   }
 });

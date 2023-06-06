@@ -12,7 +12,7 @@
       <div class="album-actions">
         <button onclick="window.location.href='/albums/read/<%= album.id %>'">Read</button>
         <button onclick="window.location.href='/albums/edit/<%= album.id %>'">Edit</button>
-        <button onclick="deleteAlbum('<%= album.id %>')">Delete</button>
+        <button onclick="window.location.href='/albums/delete/<%= album.id %>'">Delete</button>
       </div>
     </div>
   <% }); %>
@@ -37,7 +37,7 @@
 </form>
 
 <script>
-  function deleteAlbum(id) {
+  window.deleteAlbum = function(id) {
     fetch('/albums/delete/' + id, {
       method: 'DELETE',
     })

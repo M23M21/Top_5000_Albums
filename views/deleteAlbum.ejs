@@ -12,7 +12,7 @@
     <p>Title: <%= album.release_name %></p>
     <p>Artist: <%= album.artist_name %></p>
     <p>Release Date: <%= album.release_date %></p>
-    <button type="submit">Delete Album</button>
+    <button onclick="deleteAlbum('<%= album.id %>')">Delete</button>
   </form>
 </body>
 </html>
