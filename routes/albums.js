@@ -69,11 +69,11 @@ router.get('/', async (req, res) => {
 });
 
 // POST route for creating a new album
-router.post('/create', async (req, res) => {
+router.post('/', async (req, res) => {
   const album = new Album(req.body);
   try {
     await album.save();
-    res.status(201).json(album);
+    res.redirect('/albums'); // Redirect to the root route after successful creation
   } catch (error) {
     res.status(500).json({ error: 'Failed to create album' });
   }
