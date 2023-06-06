@@ -8,15 +8,22 @@
   <!-- Edit -->
   <button onclick="window.location.href='/albums/edit/<%= album._id %>'">Edit</button>
   <!-- Delete -->
-  <button onclick="deleteAlbum('<%= album._id %>')">Delete</button>
+  <button onclick="confirmDelete('<%= album._id %>')">Delete</button>
 </div>
 
 <!-- Script for delete operation -->
 <script>
+  function confirmDelete(id) {
+    if (confirm('Are you sure you want to delete this album?')) {
+      deleteAlbum(id);
+    }
+  }
+
   function deleteAlbum(id) {
-    fetch('/albums/delete/' + id, {
+    fetch('/albums/' + id, {
       method: 'DELETE',
-    }).then(response => response.json())
+    })
+      .then(response => response.json())
       .then(data => {
         if (data.success) {
           // Redirect to the album list page after deletion
@@ -25,6 +32,10 @@
           // Display the error
           alert(data.error);
         }
+      })
+      .catch(error => {
+        console.error('Error deleting album:', error);
+        alert('Failed to delete the album');
       });
   }
 </script>

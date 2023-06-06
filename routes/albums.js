@@ -26,7 +26,7 @@ router.get('/read/:id', async (req, res) => {
     if (!album) {
       return res.status(404).json({ error: 'Album not found' });
     }
-    res.render('albumDetails', { album: album });
+    res.render('albumDetail', { album: album });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve album' });
   }
@@ -69,7 +69,7 @@ router.get('/', async (req, res) => {
 });
 
 // POST route for creating a new album
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
   const album = new Album(req.body);
   try {
     await album.save();
@@ -112,7 +112,7 @@ router.delete('/:id', async (req, res) => {
     if (!album) {
       return res.status(404).json({ error: 'Album not found' });
     }
-    res.redirect('/albums'); // redirect to the album list page after deletion
+    res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete album' });
   }
