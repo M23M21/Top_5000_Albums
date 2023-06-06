@@ -1,3 +1,4 @@
+// Import necessary modules
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,7 +11,7 @@ require('dotenv').config();
 // Import necessary modules
 const albumsRouter = require('./routes/albums');
 const reviewsRouter = require('./routes/reviews');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users'); // Add this line to import the users router
 
 // Connect to the MongoDB database
 mongoose
@@ -37,13 +38,49 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
-// Use the routers for routes starting with /albums and /reviews
+// Use the routers for routes starting with /albums, /reviews, and /users
 app.use('/albums', albumsRouter);
 app.use('/reviews', reviewsRouter);
+app.use('/users', usersRouter);
 
 // Root route
 app.get('/', (req, res) => {
-  res.render('index'); // render the index.ejs file when the base URL is accessed
+  res.render('index');
+});
+
+// Signup form route
+app.get('/signup', (req, res) => {
+  res.render('signup', { signupSuccess: false });
+});
+
+// Signup route
+app.post('/users/signup', (req, res) => {
+  // Get the user input from the request body
+  const { username, email, password } = req.body;
+
+  // Perform signup logic (e.g., create a new user in the database)
+
+  // Render the signup template with signupSuccess set to true
+  res.render('signup', { signupSuccess: true });
+});
+
+// Login form route
+app.get('/login', (req, res) => {
+  const { signupSuccess } = req.query;
+  res.render('login', { signupSuccess: signupSuccess === 'true' });
+});
+
+// Define the login route
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  if (email === 'example@example.com' && password === 'password') {
+    // Successful login
+    res.send('Login successful');
+  } else {
+    // Failed login
+    res.send('Invalid credentials');
+  }
 });
 
 // Start the server
