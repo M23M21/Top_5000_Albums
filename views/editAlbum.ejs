@@ -1,6 +1,7 @@
 <h1>Edit Album</h1>
 
-<form action="/albums/edit/<%= album._id %>" method="post">
+<form action="/albums/<%= album._id %>?_method=PUT" method="POST">
+
   <div>
     <label for="release_name">Album Name:</label>
     <input type="text" id="release_name" name="release_name" value="<%= album.release_name %>" required>

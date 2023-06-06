@@ -27,7 +27,6 @@
   <% } %>
 </div>
 
-
 <h2>Add new album</h2>
 <form action="/albums" method="post">
   <input type="text" name="release_name" placeholder="Album name" required>
@@ -41,13 +40,19 @@
   function deleteAlbum(id) {
     fetch('/albums/delete/' + id, {
       method: 'DELETE',
-    }).then(response => response.json())
+    })
+      .then(response => response.json())
       .then(data => {
         if (data.success) {
+          // Refresh the page after successful deletion
           window.location.reload();
         } else {
           alert(data.error);
         }
+      })
+      .catch(error => {
+        console.error(error);
+        alert('Failed to delete album');
       });
   }
 </script>

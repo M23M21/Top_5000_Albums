@@ -106,13 +106,14 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE route for deleting an album
-router.delete('/:id', async (req, res) => {
+router.delete(['/:id', '/read/:id'], async (req, res) => {
   try {
     const album = await Album.findByIdAndDelete(req.params.id);
     if (!album) {
       return res.status(404).json({ error: 'Album not found' });
     }
-    res.json({ success: true });
+    // Redirect to the album list after deletion
+    res.redirect('/albums');
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete album' });
   }
