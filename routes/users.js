@@ -2,125 +2,97 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/Users');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const mongoose = require('mongoose');
+const SALT_ROUNDS = 10;
 
+// Async wrapper to avoid try/catch blocks
+const wrapAsync = (fn) => (req, res, next) => 
+  Promise.resolve(fn(req, res, next)).catch(next);
+  
 // Signup routes
 router.get('/signup', (req, res) => {
-  res.render('signup', { signupSuccess: false }); // Pass signupSuccess as false initially
+  res.render('signup', { signupSuccess: false });
 });
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', wrapAsync(async (req, res) => {
   const { username, email, password } = req.body;
-
-  // Hash the password before saving it to the database
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-
+  const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+  
   const newUser = new User({
-    username: username,
-    email: email,
-    password: hashedPassword, // Store the hashed password, not the plaintext one
+    username,
+    email,
+    password: hashedPassword,
   });
 
-  try {
-    await newUser.save();
-    res.render('signup', { signupSuccess: true });
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Failed to create user' });
-  }
-});
+  await newUser.save();
+  res.render('signup', { signupSuccess: true });
+}));
 
 // Login route
-router.post('/login', async (req, res) => {
+router.post('/login', wrapAsync(async (req, res) => {
   const { email, password } = req.body;
+  const user = await User.findOne({ email });
 
-  try {
-    const user = await User.findOne({ email: email });
-    
-    if (!user) {
-      res.send('Invalid credentials');
-    } else {
-      // Check if the password is correct
-      const match = await bcrypt.compare(password, user.password);
-
-      if (match) {
-        // Successful login
-        res.send('Login successful');
-      } else {
-        // Failed login
-        res.send('Invalid credentials');
-      }
-    }
-  } catch (error) {
-    console.error('Error logging in:', error);
-    res.status(500).json({ error: 'Failed to login' });
+  if (!user || !(await bcrypt.compare(password, user.password))) {
+    return res.status(401).send('Invalid credentials');
   }
-});
 
-// Create a new user
-router.post('/create', async (req, res) => {
-  try {
-    const user = await User.create(req.body);
-    res.status(201).json(user);
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Failed to create user' });
-  }
-});
+  res.send('Login successful');
+}));
 
-// Get all users
-router.get('/', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.render('users', { users });
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).json({ error: 'Failed to fetch users' });
-  }
-});
+// CRUD routes
+router.post('/create', wrapAsync(async (req, res) => {
+  const user = await User.create(req.body);
+  res.status(201).json(user);
+}));
 
-// Get a specific user by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.json(user);
-  } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ error: 'Failed to fetch user' });
-  }
-});
+router.get('/', wrapAsync(async (req, res) => {
+  const users = await User.find();
+  res.json(users);
+}));
 
-// Update a user
-router.put('/:id', async (req, res) => {
-  try {
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.json(user);
-  } catch (error) {
-    console.error('Error updating user:', error);
-    res.status(500).json({ error: 'Failed to update user' });
-  }
-});
+router.get('/:id', (req, res) => {
+    const userId = req.params.id;
+  
+    User.findById(userId)
+      .then(user => {
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+        
+        console.log(user); // Log the user object to the console
+        res.json(user); // Send the user object as the response
+      })
+      .catch(error => {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ error: 'Failed to fetch user' });
+      });
+  });
 
-// Delete a user
-router.delete('/:id', async (req, res) => {
-  try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.json({ message: 'User deleted successfully' });
-  } catch (error) {
-    console.error('Error deleting user:', error);
-    res.status(500).json({ error: 'Failed to delete user' });
+router.put('/:id', wrapAsync(async (req, res) => {
+  const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
   }
+
+  res.json(user);
+}));
+
+router.delete('/:id', wrapAsync(async (req, res) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  res.json({ message: 'User deleted successfully' });
+}));
+
+// Error handling middleware
+router.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send('Server Error');
 });
 
 module.exports = router;
