@@ -12,7 +12,7 @@ require('dotenv').config();
 const albumsRouter = require('./routes/albums');
 const reviewsRouter = require('./routes/reviews');
 const usersRouter = require('./routes/users'); // Add this line to import the users router
-
+app.use(express.static('public'));
 // Connect to the MongoDB database
 mongoose
   .connect(process.env.MONGODB_URI, {

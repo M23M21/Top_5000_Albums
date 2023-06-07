@@ -17,28 +17,49 @@ router.get('/signup', (req, res) => {
 router.post('/signup', wrapAsync(async (req, res) => {
   const { username, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-  
+
   const newUser = new User({
-    username,
+    username: username, // Use the 'username' value from the form to populate the 'user_name' field in the database
     email,
-    password: hashedPassword,
+    password: hashedPassword
   });
 
   await newUser.save();
   res.render('signup', { signupSuccess: true });
 }));
 
-// Login route
 router.post('/login', wrapAsync(async (req, res) => {
+  console.log(req.body); 
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  console.log(`Attempting to log in with email: ${email}, password: ${password}`); // Debug statement
 
-  if (!user || !(await bcrypt.compare(password, user.password))) {
+  const user = await User.findOne({ email });
+  console.log(user);
+
+  if (!user) {
+    console.log(`User not found with email: ${email}`); // Debug statement
     return res.status(401).send('Invalid credentials');
   }
 
-  res.send('Login successful');
+  console.log(`Found user: ${JSON.stringify(user)}`); // Debug statement
+
+  bcrypt.compare(password, user.password, function(err, result) {
+    if(err) {
+      console.error(`Error comparing passwords: ${err}`); // Debug statement
+      return res.status(500).send('Internal Server Error');
+    }
+    
+    if(result) {
+      console.log('Password comparison successful, login successful'); // Debug statement
+      res.send('Login successful');
+    } else {
+      console.log('Password comparison failed, login failed'); // Debug statement
+      res.status(401).send('Invalid credentials');
+    }
+  });
 }));
+
+
 
 // CRUD routes
 router.post('/create', wrapAsync(async (req, res) => {
@@ -48,7 +69,7 @@ router.post('/create', wrapAsync(async (req, res) => {
 
 router.get('/', wrapAsync(async (req, res) => {
   const users = await User.find();
-  res.json(users);
+  res.render('users', { users }); // Pass the users to the 'users.ejs' view
 }));
 
 router.get('/:id', (req, res) => {
