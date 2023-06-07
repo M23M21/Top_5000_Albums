@@ -28,36 +28,24 @@ router.post('/signup', wrapAsync(async (req, res) => {
   res.render('signup', { signupSuccess: true });
 }));
 
+// Login route
 router.post('/login', wrapAsync(async (req, res) => {
-  console.log(req.body); 
   const { email, password } = req.body;
-  console.log(`Attempting to log in with email: ${email}, password: ${password}`); // Debug statement
-
   const user = await User.findOne({ email });
-  console.log(user);
 
   if (!user) {
-    console.log(`User not found with email: ${email}`); // Debug statement
     return res.status(401).send('Invalid credentials');
   }
 
-  console.log(`Found user: ${JSON.stringify(user)}`); // Debug statement
+  const validPassword = await bcrypt.compare(password, user.password);
 
-  bcrypt.compare(password, user.password, function(err, result) {
-    if(err) {
-      console.error(`Error comparing passwords: ${err}`); // Debug statement
-      return res.status(500).send('Internal Server Error');
-    }
-    
-    if(result) {
-      console.log('Password comparison successful, login successful'); // Debug statement
-      res.send('Login successful');
-    } else {
-      console.log('Password comparison failed, login failed'); // Debug statement
-      res.status(401).send('Invalid credentials');
-    }
-  });
+  if (!validPassword) {
+    return res.status(401).send('Invalid credentials');
+  }
+
+  res.send('Login successful');
 }));
+
 
 
 
