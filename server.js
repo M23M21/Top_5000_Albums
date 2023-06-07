@@ -7,6 +7,13 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 require('dotenv').config();
+
+// Import necessary modules
+const albumsRouter = require('./routes/albums');
+const reviewsRouter = require('./routes/reviews');
+const usersRouter = require('./routes/users'); // Add this line to import the users router
+app.use(express.static('public'));
+// Connect to the MongoDB database
 const uri = 'mongodb+srv://MariusA:MariusA@cluster0.p30yy9z.mongodb.net/Top_5000_albums?retryWrites=true&w=majority';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -16,25 +23,6 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error.message);
   });
-// Import necessary modules
-const albumsRouter = require('./routes/albums');
-const reviewsRouter = require('./routes/reviews');
-const usersRouter = require('./routes/users'); // Add this line to import the users router
-app.use(express.static('public'));
-// Connect to the MongoDB database
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-    process.exit(1);
-  });
-
 // Set up EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
