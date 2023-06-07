@@ -13,17 +13,16 @@ mongoose
   .then(async () => {
     console.log('Connected to MongoDB');
 
-    // Seeding logic
     const albumsData = [
-      // Array of album objects
+    
     ];
 
     const reviewsData = [
-      // Array of review objects
+    
     ];
 
     const usersData = [
-      // Array of user objects
+      
     ];
 
     const seedData = async () => {
@@ -42,7 +41,6 @@ mongoose
       }
     };
 
-    // Call the seedData function to perform the seeding
     try {
       await seedData();
       console.log('Database seeded successfully!');
