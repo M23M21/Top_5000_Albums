@@ -4,12 +4,12 @@
   "description": "- Install the dependencies -  `npm install` - If this is your first time getting started then run the seeder - `node seeder` - Run the project in development mode - `npm run dev`",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js",
-    "start": "node server.js"
+    "dev": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Marius Apetrii",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
