@@ -34,11 +34,13 @@
     <% if (currentPage > 1) { %>
       <a href="/albums?page=<%= currentPage - 1 %>" class="pagination-button">Back</a>
     <% } %>
+    <% if (currentPage === 1) { %>
+      <a href="/albums?page=<%= totalPages %>" class="pagination-button">Last Page</a>
+    <% } %>
     <% if (currentPage < totalPages) { %>
       <a href="/albums?page=<%= currentPage + 1 %>" class="pagination-button">Next</a>
     <% } %>
-  </div>
-
+</div>
   <h2>Add new album</h2>
   <form action="/albums" method="post">
     <input type="text" name="release_name" placeholder="Album name" required>
