@@ -11,7 +11,6 @@
   
   <% if (signupSuccess) { %>
     <p>Login Successful!</p>
-    <a href="/" class="home-button">Home</a>
   <% } else if (failedAttempt) { %>
     <p>Invalid credentials. Please try again.</p>
   <% } else { %>
@@ -22,9 +21,9 @@
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required>
       <br>
-      <button type="submit">Submit</button>
+      <input type="submit" value="Submit">
     </form>
   <% } %>
-
 </body>
 </html>
+

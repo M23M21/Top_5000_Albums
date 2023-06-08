@@ -1,12 +1,16 @@
 // Import necessary modules
 const express = require('express');
+const User = require('./models/Users');
 const app = express();
 const port = process.env.PORT || 3000;
 const path = require('path');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const bcrypt = require('bcrypt');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 // Import necessary routes
 const albumsRouter = require('./routes/albums');
@@ -52,22 +56,44 @@ app.post('/users/signup', (req, res) => {
 
 // Login form route
 app.get('/login', (req, res) => {
-  const { signupSuccess, failedAttempt = false } = req.query;
-  res.render('login', {
-    signupSuccess: signupSuccess === 'true',
-    failedAttempt
-  });
-});
-
-
-// Login route
-app.get('/login', (req, res) => {
   const { signupSuccess, failedAttempt } = req.query;
   res.render('login', {
     signupSuccess: signupSuccess === 'true',
     failedAttempt: failedAttempt === 'true'
   });
 });
+
+// Login route
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  
+  try {
+    const user = await User.findOne({ email }); // find the user with given email
+
+    if (!user) {
+      return res.redirect('/login?failedAttempt=true');
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.password); // compare the given password with the hashed password from the database
+
+    if (!isValidPassword) {
+      return res.redirect('/login?failedAttempt=true');
+    }
+
+    // If everything is okay, create a token
+    const token = jwt.sign({ id: user._id }, 'your_secret_key', { expiresIn: '1h' });
+
+    // Set the token in a HttpOnly cookie
+    res.cookie('token', token, { httpOnly: true });
+
+    // Authentication successful, redirect to index page with signupSuccess query parameter
+    return res.redirect('/?signupSuccess=true');
+  } catch (err) {
+    console.error(err);
+    res.redirect('/login?failedAttempt=true');
+  }
+});
+
 
 // Start the server
 app.listen(port, () => console.log(`Server started on http://localhost:${port}`));
