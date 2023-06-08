@@ -42,7 +42,9 @@ app.use('/reviews', reviewsRouter);
 app.use('/users', usersRouter);
 
 // Root route
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (req, res) => res.render('index', { loginSuccess: req.query.loginSuccess === 'true' }));
+
+
 
 // Signup form route
 app.get('/signup', (req, res) => res.render('signup', { signupSuccess: false }));
@@ -63,6 +65,7 @@ app.get('/login', (req, res) => {
   });
 });
 
+
 // Login route
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -80,19 +83,14 @@ app.post('/login', async (req, res) => {
       return res.redirect('/login?failedAttempt=true');
     }
 
-    // If everything is okay, create a token
-    const token = jwt.sign({ id: user._id }, 'your_secret_key', { expiresIn: '1h' });
-
-    // Set the token in a HttpOnly cookie
-    res.cookie('token', token, { httpOnly: true });
-
-    // Authentication successful, redirect to index page with signupSuccess query parameter
-    return res.redirect('/?signupSuccess=true');
+    // Authentication successful, redirect to index page without any query parameter
+    return res.redirect('/?loginSuccess=true');
   } catch (err) {
     console.error(err);
     res.redirect('/login?failedAttempt=true');
   }
 });
+
 
 
 // Start the server
