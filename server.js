@@ -52,18 +52,21 @@ app.post('/users/signup', (req, res) => {
 
 // Login form route
 app.get('/login', (req, res) => {
-  const { signupSuccess } = req.query;
-  res.render('login', { signupSuccess: signupSuccess === 'true' });
+  const { signupSuccess, failedAttempt = false } = req.query;
+  res.render('login', {
+    signupSuccess: signupSuccess === 'true',
+    failedAttempt
+  });
 });
 
+
 // Login route
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  if (email === 'example@example.com' && password === 'password') {
-    res.send('Login successful');
-  } else {
-    res.send('Invalid credentials');
-  }
+app.get('/login', (req, res) => {
+  const { signupSuccess, failedAttempt } = req.query;
+  res.render('login', {
+    signupSuccess: signupSuccess === 'true',
+    failedAttempt: failedAttempt === 'true'
+  });
 });
 
 // Start the server
