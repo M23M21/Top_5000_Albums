@@ -178,3 +178,47 @@ form button:hover {
 .home-button:hover {
   background-color: #555;
 }
+.review-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.review-item {
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 80%;  /* adjust this as needed */
+  text-align: justify;  /* this will align your text nicely */
+  margin: 0 auto;  /* this will center your review item */
+}
+
+.review-user {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.review-text {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #777;
+}
+
+.review-delete {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-right: 8px;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.review-delete:hover {
+  background-color: #555;
+}
