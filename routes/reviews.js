@@ -5,6 +5,7 @@ const { Review } = require('../models/Reviews');
 reviewsRouter.get('/', async (req, res) => {
     try {
         const reviews = await Review.find({});
+        console.log(reviews);
         res.render('reviews', { reviews }); //
     } catch (error) {
         console.error('Error details:', error.message);
