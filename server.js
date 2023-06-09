@@ -71,19 +71,17 @@ app.post('/login', async (req, res) => {
   const { email, password } = req.body;
   
   try {
-    const user = await User.findOne({ email }); // find the user with given email
+    const user = await User.findOne({ email }); 
 
     if (!user) {
       return res.redirect('/login?failedAttempt=true');
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.password); // compare the given password with the hashed password from the database
-
+    const isValidPassword = await bcrypt.compare(password, user.password); 
     if (!isValidPassword) {
       return res.redirect('/login?failedAttempt=true');
     }
 
-    // Authentication successful, redirect to index page without any query parameter
     return res.redirect('/?loginSuccess=true');
   } catch (err) {
     console.error(err);
