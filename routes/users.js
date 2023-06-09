@@ -19,7 +19,7 @@ router.post('/signup', wrapAsync(async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
   const newUser = new User({
-    username: username, // Use the 'username' value from the form to populate the 'user_name' field in the database
+    username: username, 
     email,
     password: hashedPassword
   });
@@ -57,7 +57,7 @@ router.post('/create', wrapAsync(async (req, res) => {
 
 router.get('/', wrapAsync(async (req, res) => {
   const users = await User.find();
-  res.render('users', { users }); // Pass the users to the 'users.ejs' view
+  res.render('users', { users }); 
 }));
 
 router.get('/:id', (req, res) => {
@@ -69,8 +69,8 @@ router.get('/:id', (req, res) => {
           return res.status(404).json({ error: 'User not found' });
         }
         
-        console.log(user); // Log the user object to the console
-        res.json(user); // Send the user object as the response
+        console.log(user); 
+        res.json(user); 
       })
       .catch(error => {
         console.error('Error fetching user:', error);
