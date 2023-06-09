@@ -17,11 +17,11 @@
   <script>
     const deleteAlbumForm = document.getElementById('deleteAlbumForm');
     deleteAlbumForm.addEventListener('submit', (event) => {
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault(); 
 
       const confirmation = confirm('Are you sure you want to delete this album?');
       if (confirmation) {
-        // Submit the form if the user confirms
+        
         deleteAlbumForm.submit();
       }
     });

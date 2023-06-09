@@ -3,17 +3,18 @@ const router = express.Router();
 const Album = require('../models/Albums');
 const User = require('../models/Users');
 const Review = require('../models/Reviews');
-// GET route for fetching albums with pagination
+
+
 router.get('/', async (req, res) => {
   const page = parseInt(req.query.page) || 1; 
   const limit = 20; 
-  const skip = (page - 1) * limit; // 
+  const skip = (page - 1) * limit;
   
   try {
     const totalAlbums = await Album.countDocuments(); 
     const totalPages = Math.ceil(totalAlbums / limit); 
     const albums = await Album.find().limit(limit).skip(skip);
-    res.render('albums', { albums: albums, currentPage: page, totalPages: totalPages }); // pass currentPage and totalPages to the view
+    res.render('albums', { albums: albums, currentPage: page, totalPages: totalPages });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve albums' });
   }
@@ -51,7 +52,7 @@ router.put('/:id', async (req, res) => {
     if (!album) {
       return res.status(404).json({ error: 'Album not found' });
     }
-    res.redirect('/albums/read/' + req.params.id); // redirect to the updated album page
+    res.redirect('/albums/read/' + req.params.id); 
   } catch (error) {
     res.status(500).json({ error: 'Failed to update album' });
   }
@@ -73,7 +74,7 @@ router.post('/', async (req, res) => {
   const album = new Album(req.body);
   try {
     await album.save();
-    res.redirect('/albums'); // Redirect to the root route after successful creation
+    res.redirect('/albums'); 
   } catch (error) {
     res.status(500).json({ error: 'Failed to create album' });
   }
